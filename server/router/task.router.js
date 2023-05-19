@@ -1,6 +1,6 @@
 const express = require('express');
 const taskRouter = express.Router();
-const pool = require('../modules/pool/');
+const pool = require('../modules/pool');
 
 // GET
 
@@ -19,3 +19,5 @@ const pool = require('../modules/pool/');
 
 
 // DELETE
+
+module.exports = taskRouter;
