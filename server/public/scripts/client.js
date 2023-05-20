@@ -3,7 +3,7 @@ $(document).ready(onReady);
 function onReady(){
     console.log('jQuery ready to rock and roll!!');
     $('#submitBtn').on('click', handleSubmit);
-
+    $('#to-do-list').on('click', '.completed' , taskCompleted);
 
     getTask();
 };
@@ -26,7 +26,7 @@ function handleSubmit(){
     }).catch(function(error){
         console.log('POST error' , error);
     })
-    $('#to-do-list').on('click', '.completed' , taskCompleted)
+    
 };
 
 function getTask(){
@@ -44,7 +44,7 @@ function getTask(){
 }; // end getTask
 
 function taskRender(taskList){
-    // $('#to-do-list').empty();
+    $('#to-do-list').empty();
     console.log(taskList[0])
 
     for (let task of taskList) {
@@ -52,13 +52,16 @@ function taskRender(taskList){
         // we will also append a completed button and a delete button
 
         $('#to-do-list').append(`
-        <tr data-id = ${task.id}>
+        <tr id="${task.id}"data-id = ${task.id}>
             <td>${task.todo}</td>
             <td><button class = "completed">Completed</button></td>
             <td><button class = "delete">Delete</button></td>
         </tr>
         
-        `)
+        `);
+        if (task.completed === true){
+            $(`#${task.id}`).css("background-color" , "green")
+        }
     }
 };
 
@@ -67,19 +70,22 @@ function taskRender(taskList){
 function taskCompleted(){
     let idToUpdate = $(this).closest('tr').data('id');
     console.log(idToUpdate);
+    
+    
 
-    let completed = true;
-
+        
     $.ajax({
         method: 'PUT',
-        url: `/task/${idToUpdate}`,
-        data: {
-            completed
-        }
+        url: `/task/${idToUpdate}`
     }).then(function(response){
         console.log(response);
         getTask();
     }).catch(function(error){
         console.log(error)
     })
+    
+
+    
+
+   
 };
