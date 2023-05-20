@@ -1,6 +1,6 @@
 CREATE TABLE "to_do_list" (
 "id" SERIAL PRIMARY KEY,
-"todo" VARCHAR(50) NOT NULL,
+"todo" VARCHAR(50),
 "completed" BOOLEAN DEFAULT FALSE
 );
 
