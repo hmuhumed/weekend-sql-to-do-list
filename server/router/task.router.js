@@ -10,8 +10,8 @@ taskRouter.post('/', (req, res) =>{
     let queryText = `INSERT INTO "to_do_list" ("todo") VALUES ($1);`;
     
     pool.query(queryText, [req.body.toDo])
-    .then(result =>{
-        res.send(201);
+    .then((result) =>{
+        res.sendStatus(201);
     })
     .catch(error => {
         console.log('Error in GET', error);
@@ -41,7 +41,12 @@ taskRouter.get('/', (req, res) => {
 
 
 // PUT
+taskRouter.put('/:id' , (req , res) => {
+    let idToUpdate = req.params.id
+    console.log('got to put' , req.params.id);
 
+    
+})
 
 
 
