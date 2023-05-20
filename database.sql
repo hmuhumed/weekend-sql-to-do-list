@@ -1,8 +1,11 @@
-CREATE TABLE "todo" (
+CREATE TABLE "to_do_list" (
+"id" SERIAL PRIMARY KEY,
 "todo" VARCHAR(50) NOT NULL,
-"completed" VARCHAR(4) DEFAULT 'no'
+"completed" BOOLEAN DEFAULT FALSE
 );
 
 
 
-INSERT INTO "todo" ("todo") VALUES ('Go to the gym!');
+INSERT INTO "to_do_list" ("todo") VALUES ('Go to the gym!');
+
+SELECT * FROM "to_do_list";
