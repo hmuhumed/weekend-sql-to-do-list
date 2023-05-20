@@ -45,8 +45,34 @@ taskRouter.put('/:id' , (req , res) => {
     let idToUpdate = req.params.id
     console.log('got to put' , req.params.id);
 
-    
-})
+    let complete = req.body.completed
+    console.log(complete);
+
+    let queryText = `UPDATE "to_do_list"
+    SET "completed" = '1'
+    WHERE "id" = $1;
+    `
+    if(completed === 'false'){
+        queryText = `UPDATE "to_do_list"
+        SET "completed" = true 
+        WHERE "id" = $1;
+        `
+    }else{
+        queryText = `UPDATE "to_do_list"
+        SET "completed" = false 
+        WHERE "id" = $1;`
+    }
+
+    pool.query(queryText , [idToUpdate])
+    console.log('Task updated', result.rows)
+    .then(result => {
+        res.sendStatus(201)
+    })
+    .catch(error => {
+        console.log('Query text:' , queryText, 'error', error);
+        res.sendStatus(500);
+    })
+});
 
 
 

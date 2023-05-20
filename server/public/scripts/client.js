@@ -26,6 +26,7 @@ function handleSubmit(){
     }).catch(function(error){
         console.log('POST error' , error);
     })
+    $('#to-do-list').on('click', '.completed' , taskCompleted)
 };
 
 function getTask(){
@@ -63,20 +64,22 @@ function taskRender(taskList){
 
 // PUT
 
-// function taskCompleted(){
-//     let idToUpdate = $(this).closest('tr').data('id');
-//     console.log(idToUpdate);
+function taskCompleted(){
+    let idToUpdate = $(this).closest('tr').data('id');
+    console.log(idToUpdate);
 
-//     let completed = true;
+    let completed = true;
 
-//     $.ajax({
-//         method: 'PUT',
-//         url: `/task/${idToUpdate}`,
-//         data: {
-//             completed
-//         }
-//     }).then(function(response){
-//         console.log(response);
-//         getTask();
-//     })
-// }
+    $.ajax({
+        method: 'PUT',
+        url: `/task/${idToUpdate}`,
+        data: {
+            completed
+        }
+    }).then(function(response){
+        console.log(response);
+        getTask();
+    }).catch(function(error){
+        console.log(error)
+    })
+};
