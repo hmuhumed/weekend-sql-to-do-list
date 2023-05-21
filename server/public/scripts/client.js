@@ -24,6 +24,7 @@ function handleSubmit(){
     }).then(function(response){
         console.log(response);
         getTask();
+        $('#to-do').val('');
     }).catch(function(error){
         console.log('POST error' , error);
     })
