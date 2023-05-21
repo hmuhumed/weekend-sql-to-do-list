@@ -47,7 +47,6 @@ function getTask(){
 
 function taskRender(taskList){
     $('#to-do-list').empty();
-    console.log(taskList[0])
 
     for (let task of taskList) {
         // for each task append a new to the table
@@ -56,8 +55,8 @@ function taskRender(taskList){
         $('#to-do-list').append(`
         <tr id="${task.id}" data-id = ${task.id}>
             <td>${task.todo}</td>
-            <td><button class = "completed">Completed</button></td>
-            <td><button class = "delete">Delete</button></td>
+            <td><button class = "completed">✅</button></td>
+            <td><button class = "delete">❌</button></td>
         </tr>
         
         `);
@@ -92,7 +91,19 @@ function taskDelete(){
 
     console.log('Delete button was clicked');
 
-    $.ajax({
+    swal({
+        title: "Are you sure?",
+        text: "Once deleted, the to-do you created will be deleted forever!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          swal("Poof! Your imaginary file has been deleted!", {
+            icon: "success",
+          });
+          $.ajax({
         method: 'DELETE',
         url: `/task/${idToDel}`
     }).then(function(response){
@@ -101,4 +112,10 @@ function taskDelete(){
     }).catch(function(error){
         console.log('Error with deleting task', error);
     })
+        } else {
+          swal("Your imaginary file is safe!");
+        }
+      });
+
+    
 };
