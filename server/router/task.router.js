@@ -65,8 +65,21 @@ taskRouter.put('/:id' , (req , res) => {
 });
 
 
-
-
 // DELETE
 
+taskRouter.delete ('/:id' , (req , res) => {
+    const idToDel = req.params.id;
+
+    let queryText = 'DELETE FROM "to_do_list" WHERE "id" = $1; ';
+    
+    pool.query(queryText , [idToDel])
+    .then((result) => {
+        console.log(`ToDo deleted with the id ${idToDel}, ${result.rows}`);
+        res.sendStatus(200)
+    })
+    .catch((error) => {
+        console.log('Error with deleting ToDo');
+        res.sendStatus(500)
+    })
+});
 module.exports = taskRouter;

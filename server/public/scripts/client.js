@@ -4,6 +4,7 @@ function onReady(){
     console.log('jQuery ready to rock and roll!!');
     $('#submitBtn').on('click', handleSubmit);
     $('#to-do-list').on('click', '.completed' , taskCompleted);
+    $('#to-do-list').on('click', '.delete' , taskDelete)
 
     getTask();
 };
@@ -52,7 +53,7 @@ function taskRender(taskList){
         // we will also append a completed button and a delete button
 
         $('#to-do-list').append(`
-        <tr id="${task.id}"data-id = ${task.id}>
+        <tr id="${task.id}" data-id = ${task.id}>
             <td>${task.todo}</td>
             <td><button class = "completed">Completed</button></td>
             <td><button class = "delete">Delete</button></td>
@@ -71,9 +72,7 @@ function taskCompleted(){
     let idToUpdate = $(this).closest('tr').data('id');
     console.log(idToUpdate);
     
-    
 
-        
     $.ajax({
         method: 'PUT',
         url: `/task/${idToUpdate}`
@@ -82,10 +81,23 @@ function taskCompleted(){
         getTask();
     }).catch(function(error){
         console.log(error)
+    }) 
+};
+
+// DELETE
+
+function taskDelete(){
+    const idToDel = $(this).closest('tr').data('id');
+
+    console.log('Delete button was clicked');
+
+    $.ajax({
+        method: 'DELETE',
+        url: `/task/${idToDel}`
+    }).then(function(response){
+        console.log(response);
+        getTask();
+    }).catch(function(error){
+        console.log('Error with deleting task', error);
     })
-    
-
-    
-
-   
 };
